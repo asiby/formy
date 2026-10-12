@@ -10,3 +10,6 @@ js/playwright-report/
 *.swp
 .DS_Store
 js/blob-report/
+
+# Projects patches
+/patches/
