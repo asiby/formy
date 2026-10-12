@@ -1,8 +1,9 @@
 # Design proposal: content types instead of Webform
 
-> **Status: proposal, for review.** Nothing here is implemented yet.
+> **Status: proposal, reviewed.** Nothing here is implemented yet.
 > [ARCHITECTURE.md](ARCHITECTURE.md) still describes the current Webform
-> proof of concept. Questions still open are listed at the end.
+> proof of concept. Decisions from the first review are listed under
+> [Decisions](#decisions); one question remains open.
 
 ## Why
 
@@ -39,8 +40,9 @@ Formy becomes the tool for that, working on content types.
 6. Formy can open the project's existing content types without breaking them.
 
 Not goals for now: Webform support (dropped), approval before changes go live
-(a save goes live, as today), printed documents (built separately, on top of
-nodes).
+(a save goes live, unless it is scheduled; see
+[Effective dates](#effective-dates-optional)), printed documents (built
+separately, on top of nodes).
 
 ## The model: form families and versions
 
@@ -80,6 +82,15 @@ changes will be saved as version 3. Existing records keep version 2."*
 "Has records" means at least one node of that type exists, counted without
 access checks.
 
+There is no exception for small edits: once a form has records, a typo fix
+in a label or help text also creates a new version, because it changes what
+the form says. Records keep the wording they were filled in with.
+
+When a version is created, Formy asks for the new node type's
+**description**, pre-filled with the previous version's. Staff use it to say
+why the version exists (for example the regulation it implements), so no
+separate change log is needed.
+
 ### What creating a version does
 
 1. Creates a node type with a new machine name (see [Machine names](#machine-names)).
@@ -112,9 +123,10 @@ type or storage once it has data; Formy won't offer that either.
 
 - Create access is denied for retired node types (`hook_node_create_access`),
   and they are hidden from "Add content".
-- Existing records stay viewable and, by default, **editable**, so an
-  inspection that was in progress can be finished on the version it started
-  on. (Open question 2.)
+- Existing records stay viewable and **editable**, so an inspection that was
+  in progress can be finished on the version it started on. If staff don't
+  want that for a given record, they cancel it and start a new one on the
+  current version.
 - Retired versions are hidden from the content type list by default, so the
   admin screens don't fill up with old versions.
 
@@ -185,6 +197,38 @@ old one, and keeps the old one so existing links stay valid. Because retired
 versions can't be created, any new checklist created from an inquiry is the
 current version.
 
+### Fields that reference content types
+
+The project plans a multi-value field (possibly custom) on inquiry forms
+that references **content types** rather than nodes: it says which
+checklists apply to an inquiry. Pointing it at a specific version would go
+stale as soon as that checklist gets a new version.
+
+Proposed: such fields store the **form family** instead, and the current
+version is looked up when a checklist record is actually created. An
+inquiry that says "Ramp inspection applies" then always produces a record on
+the current version, while records already created keep theirs. Formy
+provides the lookup as a service, so the custom field only needs to call it.
+If the field must stay a plain reference to node types, Formy can instead
+add each new version to it, as for entity reference fields, but stored data
+would still point at old versions. (Open question.)
+
+## Effective dates (optional)
+
+A version can be saved with an **effective date** instead of going live
+immediately, for regulatory changes known in advance:
+
+- Until that date it is **scheduled**: staff can open and refine it (it has
+  no records, so edits apply in place), but records are still created on the
+  current version.
+- On the date, cron makes it current and retires the previous version.
+- A family has at most one scheduled version. Editing the form while one
+  exists opens the scheduled version.
+- Without a date, saving goes live at once, as before.
+
+This is a later addition: the first release can ship without it, since the
+version model doesn't need to change to support it.
+
 ## Views and reporting
 
 Views filter by node type, so a View built for version 1 would miss version
@@ -247,6 +291,27 @@ The project's 100+ content types become Formy forms through adoption:
 | New services | Form family and versioning, field reuse lookup, config sync filter, adoption. |
 | Webform | Dependency removed. |
 
+## Scale
+
+The agency can't predict how often forms will change; it depends on
+national and international regulatory changes. The design limits growth
+where it can:
+
+- Versions are only created for forms that already have records. Forms
+  being built or revised before first use are edited in place.
+- Unchanged questions re-use their fields, so a new version adds node type
+  and display configuration, not database tables.
+- Retired versions are hidden from admin lists.
+
+The remaining cost is the number of node types: Drupal keeps per-type field
+definitions and per-type permissions, and some admin pages list every type.
+Before building on this model, a short spike should generate realistic
+volumes on a test site, for example 150 families with 10 versions each
+(1,500 node types), and measure page load, cache size, the permissions page
+and a cross-version View. If a threshold shows up, a later option is to
+archive very old retired versions' configuration while keeping their
+records readable, but that should be decided on measurements.
+
 ## Alternatives considered
 
 **One content type for all forms, answers stored as JSON.** Changing a form
@@ -268,21 +333,26 @@ back up, and include in audits. If document-style storage is ever needed,
 the JSON columns of MySQL, MariaDB and PostgreSQL provide it inside the
 existing database.
 
+## Decisions
+
+From the first review:
+
+1. **Wording fixes:** no in-place exception. A typo fix on a form with
+   records creates a new version like any other change.
+2. **In-progress records on retired versions:** stay editable. To restart on
+   the current version, staff cancel the record and create a new one.
+3. **Entity reference fields:** adding each new version to the fields that
+   referenced the old one is right for links between records.
+4. **Change log:** none in Formy. The new node type's description says why a
+   version was created.
+5. **Effective dates:** wanted as an optional feature, after the first
+   release.
+6. **How often forms change:** unpredictable, driven by regulation. Hence
+   the [scale spike](#scale) before building.
+
 ## Open questions
 
-1. **Wording fixes.** A typo fix on a form with records creates a new
-   version. Should users with a special permission be able to fix label and
-   help-text wording in place, knowing it changes how existing records read?
-   Proposed: yes, permission-gated, and logged.
-2. **In-progress records on retired versions.** Proposed: they stay editable
-   on their own version. Alternative: lock them, and require finishing on the
-   new version.
-3. **Reference rules.** Is "add the new version to every reference field
-   that pointed at the old one" right for all of the agency's links, or do
-   some inquiries need to stay tied to a specific checklist version?
-4. **Change log.** Should Formy record who created each version and when,
-   with a short "reason for change" (for example the regulation reference)?
-   Proposed: yes, entered when saving a new version, shown in the version
-   list.
-5. **Effective dates.** Versions currently become current when saved. Will
-   the agency need versions that take effect on a set date?
+1. **Fields that reference content types:** should the planned field on
+   inquiries store the form family, resolved to the current version when a
+   checklist record is created (proposed), or stay a plain reference to node
+   types? See [Fields that reference content types](#fields-that-reference-content-types).
