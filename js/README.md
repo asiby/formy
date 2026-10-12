@@ -37,7 +37,7 @@ components and converter. Regenerate them when components change, so the demo
 matches Drupal:
 
 ```bash
-drush php:script modules/custom/formy/scripts/export-demo-fixtures.php
+ddev drush php:script modules/contrib/formy/scripts/export-demo-fixtures.php
 ```
 
 ## Notes

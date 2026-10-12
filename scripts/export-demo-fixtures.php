@@ -5,7 +5,7 @@
  * Regenerates js/demo/fixtures from the real components and converter.
  *
  * Run from a Drupal site with Formy enabled:
- *   drush php:script modules/custom/formy/scripts/export-demo-fixtures.php
+ *   ddev drush php:script modules/contrib/formy/scripts/export-demo-fixtures.php
  */
 
 declare(strict_types=1);

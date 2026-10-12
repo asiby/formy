@@ -1,17 +1,38 @@
 # Contributing to Formy
 
-## Local setup
+## Local setup (DDEV)
 
-1. A Drupal 10.3+ or 11 site with Webform 6.3 (DDEV works well).
-2. Clone this repository into `web/modules/custom/formy` and run
-   `drush en formy`.
-3. For editor work, install Node 22 and run `npm ci` in `js/`.
+We keep one Formy checkout inside the DDEV project and let Composer symlink it
+into Drupal. Run these from the DDEV project root (the folder with `.ddev/`):
+
+```bash
+mkdir -p packages
+git clone git@github.com:asiby/formy.git packages/formy
+echo "/packages/" >> .gitignore   # Formy has its own repository
+
+ddev composer config repositories.formy '{"type": "path", "url": "packages/formy", "options": {"symlink": true}}'
+ddev composer require drupal/webform "asiby/formy:@dev"
+# If Composer refuses Webform, use "drupal/webform:^6.3@beta".
+
+ddev drush en formy -y
+```
+
+Then open any webform at `/admin/structure/webform` and use its **Compose**
+tab.
+
+- Work and commit in `packages/formy`. Drupal sees it through the symlink at
+  `web/modules/contrib/formy`.
+- Run `ddev drush cr` after changing plugins, routes, services or libraries.
+- The checkout must be inside the DDEV project: the container cannot follow a
+  symlink to a folder outside it.
+- For editor work, install Node 22 and run `npm ci` in `js/` (on your host or
+  with `ddev exec`).
 
 ## Everyday commands
 
 | What | Where | Command |
 | --- | --- | --- |
-| PHP unit tests | Drupal root | `vendor/bin/phpunit -c web/core web/modules/custom/formy/tests/src/Unit` |
+| PHP unit tests | Drupal root | `ddev exec vendor/bin/phpunit -c web/core web/modules/contrib/formy/tests/src/Unit` |
 | Try the editor without Drupal | `js/` | `npm run demo`, then open http://localhost:8787/demo/ |
 | Rebuild the editor on change | `js/` | `npm run watch` |
 | Type check | `js/` | `npm run typecheck` |
