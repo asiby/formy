@@ -62,4 +62,7 @@ jobs:
           cp -r ../formy web/modules/custom/formy
       - name: Unit tests
         working-directory: drupal
-        run: vendor/bin/phpunit -c web/core web/modules/custom/formy/tests/src/Unit
+        run: |
+          vendor/bin/phpunit -c web/core --log-junit junit.xml web/modules/custom/formy/tests/src/Unit
+          php -r '$x = simplexml_load_file("junit.xml")->testsuite; $t = (int) $x["tests"]; $f = (int) $x["failures"] + (int) $x["errors"];
+            echo ($t > 0 && $f === 0 ? "::notice::" : "::error::") . "PHPUnit: $t tests, $f failures/errors\n"; exit($t > 0 && $f === 0 ? 0 : 1);'
