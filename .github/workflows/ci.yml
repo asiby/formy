@@ -60,11 +60,14 @@ jobs:
           composer require --no-interaction "drupal/webform:^6.3@beta" "drupal/core-dev:${{ matrix.drupal }}" -W
           mkdir -p web/modules/custom
           cp -r ../formy web/modules/custom/formy
-      - name: Unit tests
+      - name: Unit and kernel tests
         working-directory: drupal
+        env:
+          SIMPLETEST_DB: sqlite://localhost//tmp/formy-test.sqlite
+          SIMPLETEST_BASE_URL: http://localhost
         run: |
           set +e
-          vendor/bin/phpunit -c web/core --log-junit junit.xml web/modules/custom/formy/tests/src/Unit > phpunit.txt 2>&1
+          vendor/bin/phpunit -c web/core --log-junit junit.xml web/modules/custom/formy/tests/src > phpunit.txt 2>&1
           status=$?
           cat phpunit.txt
           # Surface the result as an annotation (visible without the log).
