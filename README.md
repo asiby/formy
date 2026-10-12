@@ -88,6 +88,16 @@ These are deliberate omissions from the proof of concept:
 - The "Compose" tab placement (`formy.links.task.yml`) needs checking on a
   real site.
 
+## Testing status
+
+- CI runs the PHP unit and kernel tests on Drupal 10.3 and 11 with Webform
+  6.3 (plugin discovery, import/compile, the API controller, response
+  protection, the editor page and its libraries).
+- CI runs the editor's unit tests and Playwright browser tests against the
+  demo's mock API.
+- Not yet done: a hands-on pass in a real Drupal admin theme (Claro, Gin) and
+  with real editors. That is the next step for the team.
+
 ## License
 
 GPL-2.0-or-later. See [LICENSE.txt](LICENSE.txt).
