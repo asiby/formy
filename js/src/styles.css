@@ -53,7 +53,8 @@
 
 .formy-bar {
   position: sticky;
-  top: 0;
+  /* Stay below Drupal's toolbar, which sets this variable. */
+  top: var(--drupal-displace-offset-top, 0px);
   z-index: 5;
   display: flex;
   align-items: center;
@@ -566,7 +567,7 @@ input.formy-field__label::placeholder {
 
 .formy-panel {
   position: sticky;
-  top: 72px;
+  top: calc(var(--drupal-displace-offset-top, 0px) + 72px);
   display: block;
   width: 320px;
   max-height: calc(100vh - 96px);

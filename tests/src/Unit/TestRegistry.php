@@ -31,8 +31,11 @@ final class TestRegistry implements ComponentRegistryInterface {
       if (!$attributes) {
         throw new \LogicException("$class has no #[FormyComponent] attribute.");
       }
-      $definition = $attributes[0]->newInstance()->get();
-      $definition['class'] = $class;
+      $attribute = $attributes[0]->newInstance();
+      // Discovery sets these before reading the definition.
+      $attribute->setClass($class);
+      $attribute->setProvider('formy');
+      $definition = $attribute->get();
       $this->components[$definition['id']] = new $class([], $definition['id'], $definition);
     }
     uasort($this->components, static fn(FormyComponentInterface $a, FormyComponentInterface $b): int =>
