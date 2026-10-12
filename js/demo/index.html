@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formy demo</title>
+  <link rel="stylesheet" href="../dist/formy-editor.css">
+  <style>
+    body { margin: 0; padding: 16px; background: #f5f6f8; }
+  </style>
+</head>
+<body>
+  <div id="formy"></div>
+  <script src="../dist/extensions/signature-preview.js"></script>
+  <script src="../dist/formy-editor.js"></script>
+  <script>
+    const responses = new URLSearchParams(location.search).get('responses') === '1';
+    fetch('/api/reset' + (responses ? '?responses=1' : '')).then(() => {
+      window.formyApp = Formy.mount(document.getElementById('formy'), {
+        webformId: 'workshop',
+        endpoints: {
+          components: '/api/components',
+          load: '/api/webform',
+          save: '/api/webform',
+          csrfToken: '/session/token',
+        },
+        links: { view: '#view', build: '#build' },
+      });
+    });
+  </script>
+</body>
+</html>

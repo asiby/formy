@@ -1,0 +1,10 @@
+{
+  "intro": {"#type": "webform_markup", "#markup": "<h2>Spring workshop registration</h2>"},
+  "welcome": {"#type": "webform_markup", "#markup": "<p>Tell us who's coming. It takes about two minutes.</p>"},
+  "full_name": {"#type": "textfield", "#title": "Full name", "#required": true},
+  "email": {"#type": "email", "#title": "Email", "#description": "We'll send the confirmation here.", "#required": true},
+  "workshop": {"#type": "radios", "#title": "Which workshop?", "#options": {"am": "Morning: Drupal basics", "pm": "Afternoon: Building with Webform"}, "#required": true},
+  "dietary": {"#type": "checkboxes", "#title": "Dietary needs", "#options": {"vegetarian": "Vegetarian", "vegan": "Vegan", "gluten_free": "Gluten-free"}},
+  "address": {"#type": "webform_address", "#title": "Mailing address"},
+  "consent": {"#type": "webform_signature", "#title": "Signature", "#required": true}
+}

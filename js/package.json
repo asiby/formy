@@ -1,0 +1,32 @@
+{
+  "name": "formy-editor",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The Formy editor: Tiptap/ProseMirror canvas with Lit UI, built into ../js/dist for Drupal.",
+  "license": "GPL-2.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "demo": "node build.mjs && node demo/serve.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
+    "@tiptap/core": "^3.31.4",
+    "@tiptap/extensions": "^3.31.4",
+    "@tiptap/pm": "^3.31.4",
+    "@tiptap/starter-kit": "^3.31.4",
+    "@tiptap/suggestion": "^3.31.4",
+    "lit": "^3.3.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.4"
+  }
+}

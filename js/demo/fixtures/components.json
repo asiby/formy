@@ -1,0 +1,453 @@
+{
+    "components": [
+        {
+            "id": "short_text",
+            "label": "Short answer",
+            "description": "A single line of text",
+            "category": "Questions",
+            "icon": "text",
+            "preview": "text",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 0,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "placeholder": {
+                    "type": "string",
+                    "title": "Placeholder",
+                    "maxLength": 255
+                },
+                "maxLength": {
+                    "type": "integer",
+                    "title": "Maximum length",
+                    "min": 1,
+                    "group": "advanced"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "placeholder": "",
+                "maxLength": null
+            }
+        },
+        {
+            "id": "long_text",
+            "label": "Long answer",
+            "description": "Several lines of text",
+            "category": "Questions",
+            "icon": "paragraph",
+            "preview": "textarea",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 1,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "placeholder": {
+                    "type": "string",
+                    "title": "Placeholder",
+                    "maxLength": 255
+                },
+                "rows": {
+                    "type": "integer",
+                    "title": "Visible lines",
+                    "min": 1,
+                    "max": 50,
+                    "group": "advanced"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "placeholder": "",
+                "rows": null
+            }
+        },
+        {
+            "id": "email",
+            "label": "Email",
+            "description": "A valid email address",
+            "category": "Questions",
+            "icon": "mail",
+            "preview": "email",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 2,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "placeholder": {
+                    "type": "string",
+                    "title": "Placeholder",
+                    "maxLength": 255
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "placeholder": ""
+            }
+        },
+        {
+            "id": "number",
+            "label": "Number",
+            "description": "A whole number",
+            "category": "Questions",
+            "icon": "hash",
+            "preview": "number",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 3,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "min": {
+                    "type": "integer",
+                    "title": "Smallest allowed",
+                    "group": "advanced"
+                },
+                "max": {
+                    "type": "integer",
+                    "title": "Largest allowed",
+                    "group": "advanced"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "min": null,
+                "max": null
+            }
+        },
+        {
+            "id": "date",
+            "label": "Date",
+            "description": "Pick a day on a calendar",
+            "category": "Questions",
+            "icon": "calendar",
+            "preview": "date",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 4,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false
+            }
+        },
+        {
+            "id": "single_choice",
+            "label": "Single choice",
+            "description": "Pick one option",
+            "category": "Choices",
+            "icon": "radio",
+            "preview": "radios",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 10,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "options": {
+                    "type": "options",
+                    "title": "Choices",
+                    "minItems": 1,
+                    "default": [
+                        {
+                            "value": "option_1",
+                            "label": "Option 1"
+                        },
+                        {
+                            "value": "option_2",
+                            "label": "Option 2"
+                        }
+                    ]
+                },
+                "display": {
+                    "type": "enum",
+                    "title": "Show as",
+                    "enum": {
+                        "radios": "Radio buttons",
+                        "dropdown": "Dropdown"
+                    },
+                    "default": "radios"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "options": [
+                    {
+                        "value": "option_1",
+                        "label": "Option 1"
+                    },
+                    {
+                        "value": "option_2",
+                        "label": "Option 2"
+                    }
+                ],
+                "display": "radios"
+            }
+        },
+        {
+            "id": "multiple_choice",
+            "label": "Checkboxes",
+            "description": "Pick one or more options",
+            "category": "Choices",
+            "icon": "checkbox",
+            "preview": "checkboxes",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 11,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                },
+                "options": {
+                    "type": "options",
+                    "title": "Choices",
+                    "minItems": 1,
+                    "default": [
+                        {
+                            "value": "option_1",
+                            "label": "Option 1"
+                        },
+                        {
+                            "value": "option_2",
+                            "label": "Option 2"
+                        }
+                    ]
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false,
+                "options": [
+                    {
+                        "value": "option_1",
+                        "label": "Option 1"
+                    },
+                    {
+                        "value": "option_2",
+                        "label": "Option 2"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "signature",
+            "label": "Signature",
+            "description": "Sign with a finger or mouse",
+            "category": "Advanced",
+            "icon": "signature",
+            "preview": "signature",
+            "previewElement": "formy-signature-preview",
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 20,
+            "schema": {
+                "label": {
+                    "type": "string",
+                    "title": "Question",
+                    "required": true,
+                    "maxLength": 255,
+                    "inline": true,
+                    "default": ""
+                },
+                "help": {
+                    "type": "text",
+                    "title": "Help text",
+                    "description": "Shown under the question.",
+                    "maxLength": 1000
+                },
+                "required": {
+                    "type": "boolean",
+                    "title": "Required"
+                }
+            },
+            "defaults": {
+                "label": "",
+                "help": "",
+                "required": false
+            }
+        },
+        {
+            "id": "heading",
+            "label": "Heading",
+            "description": "A section title",
+            "category": "Content",
+            "icon": "heading",
+            "preview": "heading",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 30,
+            "schema": {
+                "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "required": true,
+                    "maxLength": 5000,
+                    "inline": true
+                }
+            },
+            "defaults": {
+                "text": ""
+            }
+        },
+        {
+            "id": "paragraph",
+            "label": "Text",
+            "description": "A paragraph of text",
+            "category": "Content",
+            "icon": "text-block",
+            "preview": "paragraph",
+            "previewElement": null,
+            "settingsEditor": null,
+            "insertable": true,
+            "weight": 31,
+            "schema": {
+                "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "required": true,
+                    "maxLength": 5000,
+                    "inline": true
+                }
+            },
+            "defaults": {
+                "text": ""
+            }
+        }
+    ]
+}

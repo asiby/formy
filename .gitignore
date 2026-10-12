@@ -9,3 +9,4 @@ js/playwright-report/
 .vscode/
 *.swp
 .DS_Store
+js/blob-report/
