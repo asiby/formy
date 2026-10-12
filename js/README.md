@@ -33,8 +33,12 @@ Chromium or Chrome binary before `npm run test:e2e`.
 | `demo/` | Demo page, mock API server and fixtures |
 
 `demo/fixtures/components.json` and `document.json` come from the PHP
-converter. Regenerate them when components change, so the demo matches
-Drupal.
+components and converter. Regenerate them when components change, so the demo
+matches Drupal:
+
+```bash
+drush php:script modules/custom/formy/scripts/export-demo-fixtures.php
+```
 
 ## Notes
 
