@@ -280,6 +280,27 @@ The project's 100+ content types become Formy forms through adoption:
 3. It reports what it locked (field types without a component yet), so
    developers know which components to write first.
 
+## Keeping node screens usable
+
+Records must stay nodes (see [Decisions](#decisions)), so hundreds of Formy
+node types share the node admin screens with the site's regular content.
+Formy keeps those screens usable by recognising its own node types (they
+carry `formy.family`) and leaving them out where they get in the way:
+
+| Screen or query | What Formy does |
+| --- | --- |
+| "Add content" (`/node/add`) | Overrides the route to list only non-Formy types. Records are started from Formy's own "New record" page, which lists form families (current versions only), not node types. |
+| Admin toolbar | Removes the `node.add.*` links of Formy types (`hook_menu_links_discovered_alter()`). |
+| Content listing (`/admin/content`) | Ships a Views filter, "Exclude Formy forms", added to that View. Records get their own listing, organised by form, version and status. |
+| Other Views and entity queries | Excluded only where asked: queries tagged `formy_exclude` drop Formy node types (`hook_query_TAG_alter()`). There is no global exclusion, because reports, reference widgets and Formy's own pages need the records. |
+| Per-bundle contrib settings (Search API, Pathauto, Scheduler, Metatag, menu settings) | Nothing: Formy types never opt in. Site builders check that indexes and defaults are not set to "all node types". |
+
+What stays: node-wide hooks still run for every record, and contributed
+modules that list node types may each need their own small override. The
+permissions page keeps growing, because Drupal generates about five
+permissions for every node type and has no supported way to hide them. The
+[scale spike](#scale) measures that page.
+
 ## Permissions
 
 - **Editing forms** (Formy): a new permission, "compose forms", separate
@@ -298,6 +319,7 @@ The project's 100+ content types become Formy forms through adoption:
 | `DocumentConverter` | Reads and writes field instances and displays instead of Webform elements. |
 | `ChangeGuard` | Replaced by the versioning rule; checks shrink to what Drupal forbids on fields with data. |
 | New services | Form family and versioning, field reuse lookup, config sync filter, adoption. |
+| Node screens | "New record" page, `/node/add` route override, toolbar link removal, "Exclude Formy forms" Views filter, `formy_exclude` query tag. |
 | Webform | Dependency removed. |
 
 ## Scale
@@ -330,8 +352,13 @@ would all need custom code. That is the same trade-off that ruled out
 Webform.
 
 **A dedicated "submission" entity type instead of nodes.** Cleaner
-separation from site content, but the History module only works with nodes,
-and the project already has 100+ node types. Not worth the migration.
+separation from site content: the node admin screens, node-wide hooks and
+the permissions page would not see Formy's types at all, and permissions
+could be granted per form family. Reconsidered after the first review,
+because node screens were already hard to use with 100+ types. Rejected:
+the History module only works with nodes and is a requirement, and the
+project's existing types would have to be migrated. Formy instead keeps the
+node screens usable (see [Keeping node screens usable](#keeping-node-screens-usable)).
 
 **MongoDB (or another document database) for submissions.** A natural fit
 for forms whose shape changes, but Drupal has no maintained MongoDB entity
@@ -359,6 +386,12 @@ From the first review:
    release.
 6. **How often forms change:** unpredictable, driven by regulation. Hence
    the [scale spike](#scale) before building.
+7. **Records stay nodes.** A dedicated entity type was reconsidered and
+   rejected: the History module is a requirement and only works with nodes.
+   Formy excludes its node types from the node admin screens instead (see
+   [Keeping node screens usable](#keeping-node-screens-usable)).
+8. **No document database.** MongoDB and similar were ruled out (see
+   [Alternatives considered](#alternatives-considered)).
 
 ## Open questions
 
