@@ -63,6 +63,15 @@ jobs:
       - name: Unit tests
         working-directory: drupal
         run: |
-          vendor/bin/phpunit -c web/core --log-junit junit.xml web/modules/custom/formy/tests/src/Unit
-          php -r '$x = simplexml_load_file("junit.xml")->testsuite; $t = (int) $x["tests"]; $f = (int) $x["failures"] + (int) $x["errors"];
-            echo ($t > 0 && $f === 0 ? "::notice::" : "::error::") . "PHPUnit: $t tests, $f failures/errors\n"; exit($t > 0 && $f === 0 ? 0 : 1);'
+          set +e
+          vendor/bin/phpunit -c web/core --log-junit junit.xml web/modules/custom/formy/tests/src/Unit > phpunit.txt 2>&1
+          status=$?
+          cat phpunit.txt
+          # Surface the result as an annotation (visible without the log).
+          summary=$(tail -n 15 phpunit.txt | sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g')
+          if [ $status -eq 0 ] && grep -qE "OK \([1-9]|Tests: [1-9]" phpunit.txt; then
+            echo "::notice title=PHPUnit::$(grep -E 'OK \(|Tests: ' phpunit.txt | tail -n 1)"
+          else
+            echo "::error title=PHPUnit::$summary"
+            exit 1
+          fi
