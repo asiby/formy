@@ -97,6 +97,8 @@ class MenuRenderer {
     this.menu.addEventListener('formy-pick', (e) => {
       this.props?.command((e as CustomEvent<ComponentDefinition>).detail);
     });
+    window.addEventListener('scroll', this.position, true);
+    window.addEventListener('resize', this.position);
     this.onUpdate(props);
   };
 
@@ -105,8 +107,13 @@ class MenuRenderer {
     if (!this.menu) return;
     this.menu.items = props.items;
     this.menu.query = props.query;
-    const rect = props.clientRect?.();
-    if (!rect) return;
+    this.position();
+  };
+
+  /** Keeps the menu next to the "/" (also on scroll and resize). */
+  private readonly position = (): void => {
+    const rect = this.props?.clientRect?.();
+    if (!this.menu || !rect) return;
     const anchor = { getBoundingClientRect: () => rect };
     void computePosition(anchor, this.menu, {
       placement: 'bottom-start',
@@ -126,6 +133,8 @@ class MenuRenderer {
   };
 
   onExit = (): void => {
+    window.removeEventListener('scroll', this.position, true);
+    window.removeEventListener('resize', this.position);
     this.menu?.remove();
     this.menu = null;
     this.props = null;
