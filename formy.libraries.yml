@@ -1,0 +1,21 @@
+# Built from js/src with `npm run build` (see js/README.md). The built files
+# are committed so the module works without a Node toolchain on the server.
+editor:
+  version: 0.1.0
+  js:
+    js/dist/formy-editor.js: { minified: true }
+  css:
+    component:
+      js/dist/formy-editor.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+# Example extension: a custom preview for the Signature component. Component
+# plugins name their library in the #[FormyComponent(library: ...)] attribute
+# and the editor page attaches it automatically.
+signature_preview:
+  version: 0.1.0
+  js:
+    js/dist/extensions/signature-preview.js: { minified: true }

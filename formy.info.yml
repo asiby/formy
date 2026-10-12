@@ -1,0 +1,7 @@
+name: Formy
+type: module
+description: 'A document-style, drag-and-drop form builder for Webform. Type "/" to add a question.'
+package: Webform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - webform:webform

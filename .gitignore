@@ -1,0 +1,11 @@
+# Node toolchain for the editor (built output in js/dist IS committed).
+js/node_modules/
+js/coverage/
+js/test-results/
+js/playwright-report/
+
+# Editors and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store

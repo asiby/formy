@@ -1,0 +1,7 @@
+# Adds a "Compose" tab next to Webform's own "Build" tab.
+# TODO(verify on site): base_route matches Webform's tab set in Webform 6.3.
+formy.editor:
+  title: 'Compose'
+  route_name: formy.editor
+  base_route: entity.webform.canonical
+  weight: -10

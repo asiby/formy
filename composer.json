@@ -1,0 +1,16 @@
+{
+    "name": "asiby/formy",
+    "description": "A document-style, drag-and-drop form builder for Drupal Webform.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/asiby/formy",
+    "support": {
+        "issues": "https://github.com/asiby/formy/issues",
+        "source": "https://github.com/asiby/formy"
+    },
+    "require": {
+        "php": ">=8.1",
+        "drupal/core": "^10.3 || ^11",
+        "drupal/webform": "^6.3"
+    }
+}

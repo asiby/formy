@@ -1,0 +1,50 @@
+# The editor page. Anyone allowed to update the webform may compose it.
+formy.editor:
+  path: '/admin/structure/webform/manage/{webform}/compose'
+  defaults:
+    _controller: '\Drupal\formy\Controller\EditorController::page'
+    _title_callback: '\Drupal\formy\Controller\EditorController::title'
+  requirements:
+    _entity_access: 'webform.update'
+  options:
+    _admin_route: TRUE
+    parameters:
+      webform:
+        type: 'entity:webform'
+
+# Palette: every registered component, as the editor needs it.
+formy.api.components:
+  path: '/formy/api/components'
+  defaults:
+    _controller: '\Drupal\formy\Controller\ApiController::components'
+  methods: [GET]
+  requirements:
+    _permission: 'create webform+edit own webform+edit any webform'
+
+# Load a webform as a Formy document.
+formy.api.load:
+  path: '/formy/api/webform/{webform}'
+  defaults:
+    _controller: '\Drupal\formy\Controller\ApiController::load'
+  methods: [GET]
+  requirements:
+    _entity_access: 'webform.update'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+
+# Save a Formy document into the webform. Requires the X-CSRF-Token header
+# (fetched from /session/token).
+formy.api.save:
+  path: '/formy/api/webform/{webform}'
+  defaults:
+    _controller: '\Drupal\formy\Controller\ApiController::save'
+  methods: [POST]
+  requirements:
+    _entity_access: 'webform.update'
+    _csrf_request_header_token: 'TRUE'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'

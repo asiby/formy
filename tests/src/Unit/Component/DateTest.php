@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Drupal\Tests\formy\Unit\Component;
+
+use Drupal\formy\Plugin\Formy\Component\Date;
+use Drupal\Tests\formy\Unit\FormyComponentTestBase;
+
+/**
+ * @coversDefaultClass \Drupal\formy\Plugin\Formy\Component\Date
+ * @group formy
+ */
+final class DateTest extends FormyComponentTestBase {
+
+  protected function componentClass(): string {
+    return Date::class;
+  }
+
+  protected function sampleSettings(): array {
+    return [
+      ['label' => 'Event date', 'help' => '', 'required' => FALSE],
+      ['label' => 'Start', 'help' => 'Pick a weekday.', 'required' => TRUE],
+    ];
+  }
+
+}

@@ -1,0 +1,8 @@
+services:
+  plugin.manager.formy_component:
+    class: Drupal\formy\FormyComponentManager
+    parent: default_plugin_manager
+
+  formy.document_converter:
+    class: Drupal\formy\Document\DocumentConverter
+    arguments: ['@plugin.manager.formy_component']
