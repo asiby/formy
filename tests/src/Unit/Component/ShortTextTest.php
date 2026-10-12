@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit\Component;
 
 use Drupal\formy\Plugin\Formy\Component\ShortText;
 use Drupal\Tests\formy\Unit\FormyComponentTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Plugin\Formy\Component\ShortText
- * @group formy
- */
+#[Group('formy')]
 final class ShortTextTest extends FormyComponentTestBase {
 
   protected function componentClass(): string {

@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit;
 
 use Drupal\formy\Document\SettingsValidator;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Document\SettingsValidator
- * @group formy
- */
+#[Group('formy')]
 final class SettingsValidatorTest extends UnitTestCase {
 
   private const SCHEMA = [

@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit\Component;
 
 use Drupal\formy\Plugin\Formy\Component\LongText;
 use Drupal\Tests\formy\Unit\FormyComponentTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Plugin\Formy\Component\LongText
- * @group formy
- */
+#[Group('formy')]
 final class LongTextTest extends FormyComponentTestBase {
 
   protected function componentClass(): string {

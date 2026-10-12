@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit;
 
 use Drupal\formy\Document\DocumentConverter;
 use Drupal\formy\Document\InvalidDocumentException;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Document\DocumentConverter
- * @group formy
- */
+#[Group('formy')]
 final class DocumentConverterTest extends FormyUnitTestCase {
 
   private DocumentConverter $converter;

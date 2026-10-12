@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit\Component;
 
 use Drupal\formy\Plugin\Formy\Component\Number;
 use Drupal\Tests\formy\Unit\FormyComponentTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Plugin\Formy\Component\Number
- * @group formy
- */
+#[Group('formy')]
 final class NumberTest extends FormyComponentTestBase {
 
   protected function componentClass(): string {

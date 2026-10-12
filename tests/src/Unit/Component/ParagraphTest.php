@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit\Component;
 
 use Drupal\formy\Plugin\Formy\Component\Paragraph;
 use Drupal\Tests\formy\Unit\FormyComponentTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Plugin\Formy\Component\Paragraph
- * @group formy
- */
+#[Group('formy')]
 final class ParagraphTest extends FormyComponentTestBase {
 
   protected function componentClass(): string {

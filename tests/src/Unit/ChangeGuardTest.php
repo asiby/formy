@@ -6,11 +6,9 @@ namespace Drupal\Tests\formy\Unit;
 
 use Drupal\formy\Document\ChangeGuard;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @coversDefaultClass \Drupal\formy\Document\ChangeGuard
- * @group formy
- */
+#[Group('formy')]
 final class ChangeGuardTest extends UnitTestCase {
 
   private const OLD = [
