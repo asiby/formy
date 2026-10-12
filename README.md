@@ -6,6 +6,11 @@ like a page, type `/` to add a question, and drag blocks to reorder them.
 Webform still stores the form and handles submissions, emails, exports and
 permissions. Formy only replaces the authoring experience.
 
+> **Direction change:** the next version targets regular Drupal content types
+> instead of Webform, with automatic form versioning so changes never alter
+> existing records. See the [design proposal](docs/DESIGN-content-types.md)
+> and its open questions.
+
 > **Status: proof of concept (0.1).** The core loop works end to end (insert,
 > edit, reorder, save, reopen). It is ready for the team to install on a test
 > site, not for production. See [Known gaps](#known-gaps).

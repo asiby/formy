@@ -1,5 +1,10 @@
 # Architecture
 
+> **Planned change:** Formy is moving from Webform to regular content types,
+> with automatic form versioning. See the
+> [design proposal](DESIGN-content-types.md). This document describes the
+> current Webform proof of concept.
+
 Formy is a new authoring experience on top of Webform. Webform remains the
 source of truth for the form and for everything that happens after a
 respondent submits it.
