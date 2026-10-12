@@ -82,9 +82,18 @@ changes will be saved as version 3. Existing records keep version 2."*
 "Has records" means at least one node of that type exists, counted without
 access checks.
 
-There is no exception for small edits: once a form has records, a typo fix
-in a label or help text also creates a new version, because it changes what
-the form says. Records keep the wording they were filled in with.
+**Wording fixes are the one exception.** When the only changes are to
+wording, Formy offers to apply them in place instead of creating a version:
+
+- Wording means question labels, help text, the labels of choices (not
+  their stored values), and headings and text blocks.
+- Anything else in the same save (a new, removed or reordered question, a
+  changed type, required flag or choice value) means a new version, as above.
+- Fixing in place needs a separate permission, "fix form wording", so it
+  can be limited to trusted staff.
+- The editor makes the consequence clear before saving: *"These wording
+  fixes also change how the 214 existing records read."* The person saving
+  can still choose a new version instead.
 
 When a version is created, Formy asks for the new node type's
 **description**, pre-filled with the previous version's. Staff use it to say
@@ -337,8 +346,9 @@ existing database.
 
 From the first review:
 
-1. **Wording fixes:** no in-place exception. A typo fix on a form with
-   records creates a new version like any other change.
+1. **Wording fixes:** allowed in place on forms with records, for users with
+   the "fix form wording" permission, when a save changes nothing but
+   wording. They also change how existing records read.
 2. **In-progress records on retired versions:** stay editable. To restart on
    the current version, staff cancel the record and create a new one.
 3. **Entity reference fields:** adding each new version to the fields that
